@@ -25,7 +25,6 @@ public class IKController : MonoBehaviour {
                 angles[i] = Joints[i].transform.localRotation.eulerAngles.z;
             }
         }
-
         Angles = angles;
     }
 
@@ -43,7 +42,6 @@ public class IKController : MonoBehaviour {
 
             prevPoint = nextPoint;
         }
-
         return prevPoint;
     }
 
