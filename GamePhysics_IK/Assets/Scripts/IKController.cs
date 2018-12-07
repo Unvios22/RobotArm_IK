@@ -4,15 +4,16 @@ using UnityEngine;
 public class IKController : MonoBehaviour {
     [SerializeField] private Transform _targetTransform;
     public ArmJoint[] Joints;
+    public float[] Angles;
 
     private const float SamplingDistance = 5f;
     private const float LearningRate = 100f;
-    private const float DistanceThreshold = 0.2f;
+    private const float DistanceThreshold = 0.01f;
 
 
-    private void Update() {
+    private void Start() {
         float[] angles = new float[Joints.Length];
-
+        
         for (int i = 0; i < Joints.Length; i++) {
             if (Joints[i]._rotationAxis == 'x') {
                 angles[i] = Joints[i].transform.localRotation.eulerAngles.x;
@@ -25,7 +26,11 @@ public class IKController : MonoBehaviour {
             }
         }
 
-        InverseKinematics(_targetTransform.position, angles);
+        Angles = angles;
+    }
+
+    private void Update() {
+        InverseKinematics(_targetTransform.position, Angles);
     }
 
     public Vector3 ForwardKinematics(float[] angles) {
